@@ -32,6 +32,8 @@ And we can find their hexa values in the Defines.h code and the Magic value is a
 
 ![Payload-Demon-include-common-Defines h____Win32_functions](https://github.com/user-attachments/assets/dcf76a84-1c20-4e5c-9fba-745e1948404c)
 
+## Creating a Yara rule based on Dynamic API Resolution
+
 Due to the Dynamic API Resolution, we should be able to recover these different functions by decompiling the binary using Ghidra.
 Moreover, Ghidra tells that the binary doesn't import any function which can indicate Dynamic API Resolution.
 
