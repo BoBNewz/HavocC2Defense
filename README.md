@@ -33,6 +33,7 @@ And we can find their hexa values in the Defines.h code and the Magic value is a
 ![Payload-Demon-include-common-Defines h____Win32_functions](https://github.com/user-attachments/assets/dcf76a84-1c20-4e5c-9fba-745e1948404c)
 
 Due to the Dynamic API Resolution, we should be able to recover these different functions by decompiling the binary using Ghidra.
+Moreover, Ghidra tells that the binary doesn't import any function which can indicate Dynamic API Resolution.
 
 ![Find_Win32_function_in_ghidra](https://github.com/user-attachments/assets/1fd9440c-e53a-4786-85e4-254904471af8)
 
@@ -72,7 +73,7 @@ for match in matches:
     print(s + " = {" + inverted_hex + "} //" + name)
 ```
 
-And we can import this into our Yara rule !
+And we can import the output into our Yara rule !
 
 ![inverse_hex_+_correct_strings_format](https://github.com/user-attachments/assets/59d47e6e-af4e-4750-9553-05941c834796)
 
