@@ -19,7 +19,7 @@ By analyzing the C code of the demon (havoc malware), I found a header.
 
 ![Payload-Demon-src-Demon c____Demon_header](https://github.com/user-attachments/assets/a5704787-393d-44a0-9c6f-7cf2bce37fb1)
 
-It seems that the binary is using a Magic Value which is defined before the compilation.\n
+It seems that the binary is using a Magic Value which is defined before the compilation.
 We can find an AES key assuming that the data sent to the C2 are encrypted using this key.
 
 We can also see in the source code of the demon that the malware is resolving API dynamically.
@@ -82,6 +82,25 @@ And we can import the output into our Yara rule !
 We can try the yara.
 
 ![yara_winapi_triggered](https://github.com/user-attachments/assets/7705bf51-5c09-4929-9998-e6d6acbdcc51)
+
+## Analyzing Havoc traffic in a PCAP.
+
+I started by playing some HTTP traffic between the victim and the Havoc C2, and I run a listened on the network using Wireshark. I captured the Demon Initialization, some executed commands, uploaded and downloaded files.
+
+By analyzing the PCAP, we see different COMMAND IDs : 
+
+- 63 : Demon Initialization
+- 1 : GetJobs (executed commands, uploaded and downloaded files...)
+
+This IDs are always sent by the victim to the Havoc C2.
+
+The Demon always sends the header over the network. But during the Demon Initialization, it also sends the AES key and the AES IV. So, we can obtain the AES parameters and use them to decrypt other packets.
+
+Ok, we're able to find AES keys, and decrypt packets. I developed a Python script which will search for AES keys, the script can also decrypt packets if we provide the AES key, AES IV and the ip address of the C2. Due to encoding problems, it was mandatory to save the outputs into files.
+
+I got some errors while installing Pyshark, so I used a Python environment, which is available on the repo.
+
+We canno't always find the Demon Initialization in the PCAP, sometimes it has not been recorded. So, I searched for another way to find AES parameters. My first idea was to investigate the memory.
 
 
 
