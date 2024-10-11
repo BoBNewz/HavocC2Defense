@@ -94,11 +94,26 @@ By analyzing the PCAP, we see different COMMAND IDs :
 
 This IDs are always sent by the victim to the Havoc C2.
 
-The Demon always sends the header over the network. But during the Demon Initialization, it also sends the AES key and the AES IV. So, we can obtain the AES parameters and use them to decrypt other packets.
+The Demon always sends the header over the network. But during the Demon Initialization, it also sends the AES key and the AES IV. 
+
+![find_keys](https://github.com/user-attachments/assets/bed2c517-73b4-4b5a-859c-abe3492dfb86)
+
+If you check if the keys are valids, you can check the teamserver database which is located on the Havoc server.
+
+![sqlite_recover_AES_from_teamserver](https://github.com/user-attachments/assets/adfb95ba-8622-4d10-85f6-670d279040db)
+
+So, we can obtain the AES parameters and use them to decrypt other packets. We need to remove the header before trying the decryption.
+
+![traffic_in_pcap](https://github.com/user-attachments/assets/cc9d3146-d0c2-40a8-8c3c-ec985b4a3656)
+![get_info_cyberchef_decrypted](https://github.com/user-attachments/assets/653c437f-03bb-4654-b5c0-5441c01d89e5)
 
 Ok, we're able to find AES keys, and decrypt packets. I developed a Python script which will search for AES keys, the script can also decrypt packets if we provide the AES key, AES IV and the ip address of the C2. Due to encoding problems, it was mandatory to save the outputs into files.
 
 I got some errors while installing Pyshark, so I used a Python environment, which is available on the repo.
+I also created a docker image.
+
+![http_parser_docker_usage](https://github.com/user-attachments/assets/fdd43349-f011-40e0-8ca5-79d7327dacf0)
+![decrypted_traffic](https://github.com/user-attachments/assets/f66b90de-84ad-4bf3-8ae6-b169414f30b6)
 
 We canno't always find the Demon Initialization in the PCAP, sometimes it has not been recorded. So, I searched for another way to find AES parameters. My first idea was to investigate the memory.
 
