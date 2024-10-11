@@ -8,6 +8,6 @@ WORKDIR /havoc
 
 RUN pip install pyshark pycryptodome
 
-RUN curl -o havoc-http-parser.py https://raw.githubusercontent.com/BoBNewz/HavocC2Defense/refs/heads/main/havoc-http-parser.py
+RUN curl -o havoc-http-parser.py https://raw.githubusercontent.com/BoBNewz/HavocC2Defense/refs/heads/main/Havoc_HTTP_Parser/havoc-http-parser.py
 
 ENTRYPOINT ["python", "havoc-http-parser.py"]
