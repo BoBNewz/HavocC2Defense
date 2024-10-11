@@ -85,27 +85,27 @@ We can try the yara.
 
 ## Analyzing Havoc traffic in a PCAP.
 
-I started by playing some HTTP traffic between the victim and the Havoc C2, and I run a listened on the network using Wireshark. I captured the Demon Initialization, some executed commands, uploaded and downloaded files.
+I started by playing some HTTP traffic between the victim and the Havoc C2, and I listened the network using Wireshark. I captured the Demon Initialization, some executed commands, uploaded and downloaded files.
 
 By analyzing the PCAP, we see different COMMAND IDs : 
 
 - 63 : Demon Initialization
 - 1 : GetJobs (executed commands, uploaded and downloaded files...)
 
-This IDs are always sent by the victim to the Havoc C2.
+These IDs are always sent by the victim to the Havoc C2.
 
 The Demon always sends the header over the network. But during the Demon Initialization, it also sends the AES key and the AES IV. 
 
 ![find_keys](https://github.com/user-attachments/assets/bed2c517-73b4-4b5a-859c-abe3492dfb86)
 
-If you check if the keys are valids, you can check the teamserver database which is located on the Havoc server.
+If you wanna check if the keys are valids, you can read the teamserver database which is located on the Havoc server.
 
 ![sqlite_recover_AES_from_teamserver](https://github.com/user-attachments/assets/adfb95ba-8622-4d10-85f6-670d279040db)
 
 So, we can obtain the AES parameters and use them to decrypt other packets. We need to remove the header before trying the decryption.
 
 ![traffic_in_pcap](https://github.com/user-attachments/assets/cc9d3146-d0c2-40a8-8c3c-ec985b4a3656)
-![get_info_cyberchef_decrypted](https://github.com/user-attachments/assets/653c437f-03bb-4654-b5c0-5441c01d89e5)
+![get_info_cyberchef_decrypted](https://github.com/user-attachments/assets/b6c5d5f7-6998-4d4f-886d-db84f099ea6c)
 
 Ok, we're able to find AES keys, and decrypt packets. I developed a Python script which will search for AES keys, the script can also decrypt packets if we provide the AES key, AES IV and the ip address of the C2. Due to encoding problems, it was mandatory to save the outputs into files.
 
