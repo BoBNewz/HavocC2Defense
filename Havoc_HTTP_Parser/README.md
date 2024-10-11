@@ -4,7 +4,7 @@
 
 ```
 git clone https://github.com/BoBNewz/HavocC2Defense.git
-cd Havoc_HTTP_Parser
+cd HavocC2Defense/Havoc_HTTP_Parser
 python -m venv havoc_env
 source havoc_env/bin/activate
 
@@ -18,7 +18,7 @@ python havoc-http-parser.py -h
 
 ```
 git clone https://github.com/BoBNewz/HavocC2Defense.git
-cd Havoc_HTTP_Parser/Docker
+cd HavocC2Defense/Havoc_HTTP_Parser/Docker
 
 docker build . -t havoc-http-parser
 mkdir files && mv /files/to/pcap/file.pcap files
