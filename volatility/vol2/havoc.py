@@ -1,5 +1,5 @@
 """
-Plugin to recover Havoc headers in memory.
+Plugin to recover Havoc Demon headers in memory.
 
 	- Magic Value
 	- AgentID
@@ -56,6 +56,7 @@ class HavocExtractor():
         return 0
 
 class Havoc(common.AbstractWindowsCommand):
+    """Find Havoc Demon AES keys."""
 
     def __init__(self, config, *args, **kwargs):
         common.AbstractWindowsCommand.__init__(self, config, *args, **kwargs)
