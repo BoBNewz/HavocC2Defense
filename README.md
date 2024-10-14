@@ -117,6 +117,27 @@ I also created a docker image.
 
 We canno't always find the Demon Initialization in the PCAP, sometimes it has not been recorded. So, I searched for another way to find AES parameters. My first idea was to investigate the memory.
 
+## Analyzing the memory
 
+For the rest of the blog, I used anther Demon with different AES key an IV.
 
+I dumped the victim machine's memory using DumpIt while the Demon was running.
 
+I started by dumping the process from the memory dump using volatility2.
+
+![dump_bin_mem](https://github.com/user-attachments/assets/a1a36476-0916-495e-b5e4-30b9e7da1027)
+
+We can analyze the dump using hexeditor and look for the magic value **DEADBEEF**.
+
+![hexdump](https://github.com/user-attachments/assets/a185ace1-d281-4955-97a2-2fce40149303)
+
+And we can find the entire header !
+
+Based on this header, we can create a Regex and used it in a volatility plugin.
+
+![regex](https://github.com/user-attachments/assets/6cc6091b-ad8c-4621-a3bd-cac58330fdb8)
+![vol_usage](https://github.com/user-attachments/assets/44de439a-4031-49a0-a647-a840762d00ae)
+
+We are able now to find Havoc headers in memory using Volatility2. I did the same for Volatility3 :) .
+
+We can use the key and the IV to decrypt some HTTP traffic (or HTTPS if you have the private key which is located on the Havoc server).
