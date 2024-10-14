@@ -119,7 +119,7 @@ We canno't always find the Demon Initialization in the PCAP, sometimes it has no
 
 ## Analyzing the memory
 
-For the rest of the blog, I used anther Demon with different AES key an IV.
+For the rest of the blog, I used another Demon with different AES key and IV.
 
 I dumped the victim machine's memory using DumpIt while the Demon was running.
 
@@ -133,7 +133,7 @@ We can analyze the dump using hexeditor and look for the magic value **DEADBEEF*
 
 And we can find the entire header !
 
-Based on this header, we can create a Regex and used it in a volatility plugin.
+Based on this header, we can create a Regex and use it in a volatility plugin.
 
 ![regex](https://github.com/user-attachments/assets/6cc6091b-ad8c-4621-a3bd-cac58330fdb8)
 ![vol_usage](https://github.com/user-attachments/assets/44de439a-4031-49a0-a647-a840762d00ae)
